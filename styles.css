@@ -11,12 +11,18 @@ h1 {
 body {
     font-family: sans-serif;
     background-color: darkcyan;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    margin: 0;
+    align-items: center;
+
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 90%;
     justify-content: flex-start;
     margin-bottom: 15px;
     padding: 5px;
