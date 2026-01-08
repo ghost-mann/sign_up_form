@@ -1,4 +1,8 @@
 <?php
+$host = 'localhost';
+$user = 'postgres';
+$password = 'root';
+$database = 'postgres';
 ?>
 
 <!DOCTYPE html>
