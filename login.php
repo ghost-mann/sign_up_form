@@ -1,8 +1,42 @@
 <?php
+
+//db variables
 $host = 'localhost';
 $user = 'postgres';
 $password = 'root';
 $database = 'postgres';
+
+// data source name - connection - username and password are in pdo
+
+$dsn = "pgsql:host=$host;port=5432;dbname=$database";
+
+// pdo - php data object
+try {
+    $pdo = new PDO($dsn, $user, $password, [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    ]);
+}   catch (PDOException $e) {
+    echo "Connection failed: " . htmlspecialchars($e->getMessage());
+}
+
+// submission of entered email and password
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = htmlspecialchars(($_POST['email']));
+    $password = htmlspecialchars(($_POST['password']));
+
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch();
+
+    if ($user && password_verify($password, $user['password'])) {
+        $_SESSION['user_id'] = $user['id'];
+    }   else {
+        $error = "Invalid credentials";
+    }
+
+}
+
 ?>
 
 <!DOCTYPE html>
